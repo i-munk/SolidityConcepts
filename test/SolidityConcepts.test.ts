@@ -143,11 +143,10 @@ describe('SolidityConcepts', function () {
       );
       const sourceCode = fs.readFileSync(contractPath, 'utf8');
 
-      expect(
-        sourceCode.match(
-          /\bfunction\s+\w+\s*\([^)]*\)\s+public\s+onlyOwner\s*\{/
-        )
-      ).to.not.be.null;
+      const regex =
+        /\bfunction\s+ownerFunction\s*\([^)]*\)\s+(?:[\w\s]*)\bonlyOwner\b/;
+
+      expect(sourceCode.match(regex)).to.not.be.null;
     });
 
     it('modifier onlyOwner는 소유자(owner)가 아닌 경우 "Not the contract owner"를 에러로 출력(require)해야 합니다.', async function () {
